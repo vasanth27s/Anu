@@ -11,7 +11,7 @@
         :root {
             --gold: #D4AF37;
             --light-gold: #fcf6ba;
-            --dark: #0a0a0b;
+            --dark: #050505;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(212, 175, 55, 0.3);
         }
@@ -24,187 +24,208 @@
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
+            /* Hide default cursor to use the custom royal cursor */
+            cursor: none;
         }
 
-        /* High-End Particle Canvas */
+        /* Custom Royal Cursor */
+        #cursor {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        /* Background Particle System */
         #canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at center, #1a1a1c 0%, #0a0a0b 100%);
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
         }
 
         .main-container {
-            max-width: 850px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 100px 20px;
             text-align: center;
         }
 
-        /* Typography & Header */
-        .emblem { font-size: 3.5rem; display: block; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--gold)); }
-        
-        .top-tag { 
-            letter-spacing: 6px; 
-            font-size: 0.75rem; 
-            color: var(--gold); 
-            margin-bottom: 15px; 
-            text-transform: uppercase;
-            font-weight: 400;
-        }
+        /* Header Section */
+        .emblem { font-size: 3.5rem; display: block; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--gold)); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .top-tag { letter-spacing: 8px; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; }
 
         .royal-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(2.2rem, 10vw, 4rem);
+            font-size: clamp(2.5rem, 10vw, 4.5rem);
             font-weight: 700;
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 50px;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            margin-bottom: 60px;
         }
 
-        /* Premium Glassmorphism */
-        .glass {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        /* Professional Staggered Gallery Layout */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 80px;
+            align-items: center;
+        }
+
+        .image-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
             border: 1px solid var(--border);
-            border-radius: 24px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-            padding: 25px;
-            margin-bottom: 40px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            background: var(--glass);
+            padding: 10px;
         }
 
-        .image-wrapper img {
+        .image-card img {
             width: 100%;
-            border-radius: 16px;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
             display: block;
-            filter: contrast(1.1) brightness(0.9);
+            transition: transform 1s ease;
+            filter: brightness(0.9) contrast(1.1);
         }
 
-        /* Countdown Grid */
+        /* Parallax effect on hover */
+        .image-card:hover { transform: translateY(-20px) scale(1.02); z-index: 10; border-color: var(--gold); }
+        .image-card:hover img { transform: scale(1.05); filter: brightness(1.1); }
+
+        /* Offsetting the second image for a professional look */
+        .offset-top { margin-top: 80px; }
+
+        /* Countdown Section */
+        .countdown-wrap {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            padding: 50px 20px;
+            border-radius: 30px;
+            margin-bottom: 60px;
+        }
+
         #countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            padding: 20px 0;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .time-block span {
             display: block;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-size: clamp(1.8rem, 6vw, 3rem);
             font-family: 'Cinzel', serif;
             color: var(--gold);
             font-weight: 700;
         }
 
-        .time-block label { 
-            font-size: 0.65rem; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-            color: rgba(255,255,255,0.5); 
-        }
+        .time-block label { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; }
 
-        /* The Interactive Button */
+        /* Action Button */
         .gold-btn {
             background: transparent;
             border: 1px solid var(--gold);
             color: var(--gold);
-            padding: 22px 50px;
-            font-size: 0.85rem;
-            letter-spacing: 4px;
+            padding: 25px 60px;
+            font-size: 0.9rem;
+            letter-spacing: 5px;
             cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            margin-top: 30px;
-            border-radius: 60px;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.5s ease;
+            border-radius: 100px;
             text-transform: uppercase;
         }
 
         .gold-btn:hover {
             background: var(--gold);
-            color: #000;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+            color: black;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
             transform: translateY(-5px);
         }
 
-        /* Wish Section (Revealed) */
-        .cursive { 
-            font-family: 'Great Vibes', cursive; 
-            font-size: clamp(2.5rem, 8vw, 4rem); 
-            color: var(--gold); 
-            margin-bottom: 10px;
+        /* Revealed Message Section */
+        .reveal-box { display: none; opacity: 0; }
+        
+        .active-reveal {
+            display: block !important;
+            animation: luxuryFade 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .wish-text { 
-            font-size: clamp(1rem, 4vw, 1.25rem); 
-            line-height: 2.2; 
-            font-weight: 200; 
-            margin: 30px 0;
-            color: #e0e0e0;
-            padding: 0 10%;
+        @keyframes luxuryFade {
+            0% { opacity: 0; transform: translateY(80px) scale(0.9); filter: blur(20px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
+
+        .cursive { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 4.5rem); color: var(--gold); margin-bottom: 20px; }
         
+        .wish-text {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            line-height: 2.5;
+            max-width: 750px;
+            margin: 0 auto 40px auto;
+            font-weight: 200;
+            color: #f0f0f0;
+        }
+
         .divider {
-            margin: 40px auto;
-            width: 70%;
+            margin: 50px auto;
+            width: 60%;
             height: 1px;
             background: linear-gradient(to right, transparent, var(--gold), transparent);
             position: relative;
         }
 
-        .divider span { 
-            position: absolute; 
-            top: -18px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: var(--dark); 
-            padding: 0 20px;
-            font-size: 1.5rem;
-        }
+        .divider span { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: var(--dark); padding: 0 25px; font-size: 2rem; }
 
-        /* Reveal Animation Sequence */
-        .reveal-box {
-            display: none;
-            opacity: 0;
-        }
+        footer { margin-top: 100px; padding-bottom: 60px; border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 40px; }
 
-        .active-reveal {
-            display: block !important;
-            animation: luxuryReveal 2.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        /* Responsive Fixes */
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+            .offset-top { margin-top: 0; }
+            * { cursor: auto; }
+            #cursor { display: none; }
         }
-
-        @keyframes luxuryReveal {
-            0% { opacity: 0; transform: translateY(60px); filter: blur(15px); }
-            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        .glass-footer { margin-top: 60px; border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 30px; }
     </style>
 </head>
 <body>
 
+    <div id="cursor"></div>
     <canvas id="canvas"></canvas>
 
     <div class="main-container">
         <header>
             <span class="emblem">👼</span>
-            <p class="top-tag">Wishes From your hacker</p>
+            <p class="top-tag">A Royal Tribute For Your Grace</p>
             <h1 class="royal-title">The Angel Anu</h1>
         </header>
 
-        <div class="image-wrapper glass">
-            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjI7nE98Noly44-SerBaooV2vCMtTjEGSuJkZnR6656032WxGhRB8qroAw8hStmPvO--E2f9q5vCY8099RBvrNCoQT0W3_KVwmrjgnBdHV0ljXyjYURLHzDGnZChbQvbaCPSEgDlmqLqSO1LAM8EiSrJVaAcWXoOPH2GPrDCc_DukUnCZogFSaa8-IVRE8" alt="Royal Celebration">
+        <div class="gallery-grid">
+            <div class="image-card">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiIvh7QweGnd6bKl-Fq7_5_iN36l19hv2RyI-mY--_Ja39FyXeMXGbPjdG0zoBfBi0uEOmFPS-zK73h0HKICAn-8ZxrjQfubyJi_Lokyvxrfvovecq3l79pWxg_xLgE8e0pORRMJ7Ys66k5GIt_iQGAAaH2gItr6gZeFxMSG2i_4egiI3ynfS1z_yKJwno" alt="Angelic Perspective 1">
+            </div>
+            <div class="image-card offset-top">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh0YB1M1dUah7Y-3PPrAMHZVEYco15jKXG5O9-M4dXh7YzrkWnGYUBB62QCzB8C-zibCjYVYT8n-UbhHHL24vtW1OGvRk3emmTgR_FrLck2xubSEdB8SyWu6TmSIPBK5fn1CrTo3lEajlE0uXt-mOKx3Z7d0ZUg04LkEjpxU959Yx2_02DOfgN-j8CJVkk" alt="Angelic Perspective 2">
+            </div>
         </div>
 
-        <section class="countdown-section glass">
-            <p class="top-tag" style="margin-bottom: 20px; font-size: 0.6rem;">The Royal Commencement</p>
+        <section class="countdown-wrap">
+            <p class="top-tag" style="font-size: 0.6rem; margin-bottom: 30px;">Countdown to the Grand Celebration</p>
             <div id="countdown">
                 <div class="time-block"><span id="days">00</span><label>Days</label></div>
                 <div class="time-block"><span id="hours">00</span><label>Hours</label></div>
@@ -214,37 +235,43 @@
         </section>
 
         <div id="action-area">
-            <button class="gold-btn" id="main-trigger" onclick="triggerMagic()">CLICK TO UNVEIL THE MAGIC 👼</button>
+            <button class="gold-btn" onclick="unveilMagic()">Unveil The Royal Wish 👼</button>
         </div>
 
         <div id="reveal-section" class="reveal-box">
-            <article class="wish-container">
-                <h3 class="cursive">Happy Birthday, Angel</h3>
+            <article>
+                <h3 class="cursive">Happy Birthday,  Anu</h3>
                 <p class="wish-text">
-                    Today, the stars align to celebrate a soul that is purely divine. 
-                    Like a masterpiece in a royal gallery, you bring elegance to every 
-                    moment of my life. May this year be a symphony of luxury, 
-                    peace, and boundless joy.
+                    In the grand architecture of life, some souls are designed with pure grace. 
+                    Today, we celebrate the light you bring into the world—a light as radiant 
+                    as a diamond and as peaceful as an angel’s wing. May your journey 
+                    be filled with luxury, love, and a symphony of joy.
                 </p>
                 <div class="divider"><span>👼</span></div>
-                <p class="date-stamp" style="letter-spacing: 8px; font-weight: 200; color: var(--gold);">23 • 03 • 2026</p>
+                <p style="letter-spacing: 12px; color: var(--gold); font-weight: 200;">23 • 03 • 2026</p>
             </article>
 
-            <div class="glass-footer">
-                <p class="cursive" style="font-size: 2rem;">You are angel Forever</p>
-                <p style="font-size: 0.7rem; letter-spacing: 3px; opacity: 0.4; margin-top: 15px;">EVERY LINE OF CODE IS INSPIRED BY YOUR GRACE</p>
-            </div>
+            <footer>
+                <p class="cursive" style="font-size: 2.2rem;">Forever Your Hacker</p>
+                <p style="font-size: 0.7rem; letter-spacing: 4px; opacity: 0.4; margin-top: 15px;">EXCLUSIVELY CRAFTED • 2026 EDITION</p>
+            </footer>
         </div>
     </div>
 
     <script>
-        /** 1. Countdown Logic **/
-        const birthdayDate = new Date("March 23, 2026 00:00:00").getTime();
-        
+        // 1. Cursor Follow Logic
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // 2. High-Precision Countdown
+        const bdayDate = new Date("March 23, 2026 00:00:00").getTime();
         function updateTimer() {
             const now = new Date().getTime();
-            const diff = birthdayDate - now;
-
+            const diff = bdayDate - now;
+            
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -258,27 +285,27 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        /** 2. Reveal Logic **/
-        function triggerMagic() {
-            const btn = document.getElementById('main-trigger');
-            const section = document.getElementById('reveal-section');
-
+        // 3. Reveal Content Function
+        function unveilMagic() {
+            const btn = document.querySelector('.gold-btn');
+            const reveal = document.getElementById('reveal-section');
+            
             btn.style.opacity = '0';
-            btn.style.transform = 'scale(0.9) translateY(20px)';
+            btn.style.transform = 'translateY(20px)';
             
             setTimeout(() => {
                 btn.parentElement.style.display = 'none';
-                section.classList.add('active-reveal');
-                // Speed up particles for a "magical" feel
-                particleSpeed = 2.5;
+                reveal.classList.add('active-reveal');
+                // Adjust particles for celebration
+                pSpeed = 2.0;
             }, 600);
         }
 
-        /** 3. Angel Dust Particle System **/
+        // 4. Angel Dust Particle Engine
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
-        let particleSpeed = 0.4;
-
+        let pSpeed = 0.4;
+        
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -287,42 +314,36 @@
         resize();
 
         let particles = [];
-        class AngelDust {
+        class Particle {
             constructor() {
-                this.init();
+                this.reset();
             }
-            init() {
+            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.8 + 0.2;
-                this.velX = (Math.random() - 0.5) * particleSpeed;
-                this.velY = (Math.random() - 0.5) * particleSpeed;
-                this.alpha = Math.random();
+                this.size = Math.random() * 1.5 + 0.5;
+                this.vX = (Math.random() - 0.5) * pSpeed;
+                this.vY = (Math.random() - 0.5) * pSpeed;
+                this.a = Math.random();
+            }
+            update() {
+                this.x += this.vX;
+                this.y += this.vY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
             }
             draw() {
-                ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.a})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
-            update() {
-                this.x += this.velX * particleSpeed;
-                this.y += this.velY * particleSpeed;
-                
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.init();
-                }
-            }
         }
 
-        for (let i = 0; i < 150; i++) particles.push(new AngelDust());
+        for (let i = 0; i < 120; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
