@@ -24,20 +24,7 @@
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
-            /* Hide default cursor to use the custom royal cursor */
-            cursor: none;
-        }
-
-        /* Custom Royal Cursor */
-        #cursor {
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
+            cursor: crosshair;
         }
 
         /* Background Particle System */
@@ -47,6 +34,15 @@
             width: 100%; height: 100%;
             z-index: -1;
             background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        /* Celebration Layer (Flowers & Hearts) */
+        #celebration-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 99;
         }
 
         .main-container {
@@ -72,13 +68,12 @@
             margin-bottom: 60px;
         }
 
-        /* Professional Staggered Gallery Layout */
+        /* Professional Staggered Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             margin-bottom: 80px;
-            align-items: center;
         }
 
         .image-card {
@@ -87,33 +82,28 @@
             overflow: hidden;
             border: 1px solid var(--border);
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
             background: var(--glass);
             padding: 10px;
         }
 
         .image-card img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
             border-radius: 12px;
             display: block;
-            transition: transform 1s ease;
-            filter: brightness(0.9) contrast(1.1);
+            transition: 1.5s ease;
+            filter: brightness(0.8) contrast(1.1);
         }
 
-        /* Parallax effect on hover */
-        .image-card:hover { transform: translateY(-20px) scale(1.02); z-index: 10; border-color: var(--gold); }
-        .image-card:hover img { transform: scale(1.05); filter: brightness(1.1); }
+        .image-card:hover { transform: scale(1.03); border-color: var(--gold); }
+        .image-card:hover img { filter: brightness(1.1); transform: scale(1.1); }
 
-        /* Offsetting the second image for a professional look */
         .offset-top { margin-top: 80px; }
 
-        /* Countdown Section */
+        /* Countdown Box */
         .countdown-wrap {
             background: var(--glass);
             backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--border);
             padding: 50px 20px;
             border-radius: 30px;
@@ -132,12 +122,11 @@
             font-size: clamp(1.8rem, 6vw, 3rem);
             font-family: 'Cinzel', serif;
             color: var(--gold);
-            font-weight: 700;
         }
 
         .time-block label { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; }
 
-        /* Action Button */
+        /* Magic Button */
         .gold-btn {
             background: transparent;
             border: 1px solid var(--gold);
@@ -146,81 +135,85 @@
             font-size: 0.9rem;
             letter-spacing: 5px;
             cursor: pointer;
-            transition: all 0.5s ease;
+            transition: 0.5s;
             border-radius: 100px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 10;
         }
 
-        .gold-btn:hover {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
-            transform: translateY(-5px);
-        }
+        .gold-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 50px var(--gold); }
 
-        /* Revealed Message Section */
-        .reveal-box { display: none; opacity: 0; }
+        /* Revealed Section */
+        #reveal-section { display: none; opacity: 0; }
         
         .active-reveal {
             display: block !important;
-            animation: luxuryFade 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: luxuryReveal 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes luxuryFade {
-            0% { opacity: 0; transform: translateY(80px) scale(0.9); filter: blur(20px); }
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        @keyframes luxuryReveal {
+            0% { opacity: 0; transform: translateY(100px); filter: blur(20px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        .cursive { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 4.5rem); color: var(--gold); margin-bottom: 20px; }
+        .cursive { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 5rem); color: var(--gold); margin: 30px 0; }
         
         .wish-text {
-            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
             line-height: 2.5;
-            max-width: 750px;
-            margin: 0 auto 40px auto;
+            max-width: 800px;
+            margin: 0 auto;
             font-weight: 200;
-            color: #f0f0f0;
+            color: #eee;
+        }
+
+        /* Flower & Gift Animation Items */
+        .celebration-item {
+            position: absolute;
+            font-size: 2rem;
+            animation: fall linear forwards;
+            filter: drop-shadow(0 0 10px rgba(212,175,55,0.3));
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
         .divider {
-            margin: 50px auto;
-            width: 60%;
-            height: 1px;
+            margin: 60px auto; width: 60%; height: 1px;
             background: linear-gradient(to right, transparent, var(--gold), transparent);
             position: relative;
         }
-
         .divider span { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: var(--dark); padding: 0 25px; font-size: 2rem; }
 
-        footer { margin-top: 100px; padding-bottom: 60px; border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 40px; }
+        footer { margin-top: 100px; padding-bottom: 60px; opacity: 0.5; font-size: 0.7rem; letter-spacing: 4px; }
 
-        /* Responsive Fixes */
         @media (max-width: 768px) {
             .gallery-grid { grid-template-columns: 1fr; }
             .offset-top { margin-top: 0; }
-            * { cursor: auto; }
-            #cursor { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div>
     <canvas id="canvas"></canvas>
+    <div id="celebration-layer"></div>
 
     <div class="main-container">
         <header>
             <span class="emblem">👼</span>
-            <p class="top-tag">A Royal Tribute For Your Grace</p>
+            <p class="top-tag">An Eternal Tribute</p>
             <h1 class="royal-title">The Angel Anu</h1>
         </header>
 
         <div class="gallery-grid">
             <div class="image-card">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiIvh7QweGnd6bKl-Fq7_5_iN36l19hv2RyI-mY--_Ja39FyXeMXGbPjdG0zoBfBi0uEOmFPS-zK73h0HKICAn-8ZxrjQfubyJi_Lokyvxrfvovecq3l79pWxg_xLgE8e0pORRMJ7Ys66k5GIt_iQGAAaH2gItr6gZeFxMSG2i_4egiI3ynfS1z_yKJwno" alt="Angelic Perspective 1">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiIvh7QweGnd6bKl-Fq7_5_iN36l19hv2RyI-mY--_Ja39FyXeMXGbPjdG0zoBfBi0uEOmFPS-zK73h0HKICAn-8ZxrjQfubyJi_Lokyvxrfvovecq3l79pWxg_xLgE8e0pORRMJ7Ys66k5GIt_iQGAAaH2gItr6gZeFxMSG2i_4egiI3ynfS1z_yKJwno" alt="Perspective 1">
             </div>
             <div class="image-card offset-top">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh0YB1M1dUah7Y-3PPrAMHZVEYco15jKXG5O9-M4dXh7YzrkWnGYUBB62QCzB8C-zibCjYVYT8n-UbhHHL24vtW1OGvRk3emmTgR_FrLck2xubSEdB8SyWu6TmSIPBK5fn1CrTo3lEajlE0uXt-mOKx3Z7d0ZUg04LkEjpxU959Yx2_02DOfgN-j8CJVkk" alt="Angelic Perspective 2">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh0YB1M1dUah7Y-3PPrAMHZVEYco15jKXG5O9-M4dXh7YzrkWnGYUBB62QCzB8C-zibCjYVYT8n-UbhHHL24vtW1OGvRk3emmTgR_FrLck2xubSEdB8SyWu6TmSIPBK5fn1CrTo3lEajlE0uXt-mOKx3Z7d0ZUg04LkEjpxU959Yx2_02DOfgN-j8CJVkk" alt="Perspective 2">
             </div>
         </div>
 
@@ -228,17 +221,17 @@
             <p class="top-tag" style="font-size: 0.6rem; margin-bottom: 30px;">Countdown to the Grand Celebration</p>
             <div id="countdown">
                 <div class="time-block"><span id="days">00</span><label>Days</label></div>
-                <div class="time-block"><span id="hours">00</span><label>Hours</label></div>
-                <div class="time-block"><span id="mins">00</span><label>Minutes</label></div>
-                <div class="time-block"><span id="secs">00</span><label>Seconds</label></div>
+                <div class="time-block"><span id="hours">00</span><label>Hrs</label></div>
+                <div class="time-block"><span id="mins">00</span><label>Mins</label></div>
+                <div class="time-block"><span id="secs">00</span><label>Secs</label></div>
             </div>
         </section>
 
         <div id="action-area">
-            <button class="gold-btn" onclick="unveilMagic()">Unveil The Royal Wish 👼</button>
+            <button class="gold-btn" onclick="triggerCelebration()">Click Here  👼</button>
         </div>
 
-        <div id="reveal-section" class="reveal-box">
+        <div id="reveal-section" >
             <article>
                 <h3 class="cursive">Happy Birthday,  Anu</h3>
                 <p class="wish-text">
@@ -252,59 +245,66 @@
             </article>
 
             <footer>
-                <p class="cursive" style="font-size: 2.2rem;">Forever Your Hacker</p>
-                <p style="font-size: 0.7rem; letter-spacing: 4px; opacity: 0.4; margin-top: 15px;">EXCLUSIVELY CRAFTED • 2026 EDITION</p>
+                <p class="cursive" style="font-size: 2.2rem; opacity: 1;">Forever Your Hacker</p>
+                <p style="margin-top: 15px;">EXCLUSIVELY CRAFTED • 1 CRORE EDITION</p>
             </footer>
         </div>
     </div>
 
     <script>
-        // 1. Cursor Follow Logic
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // 2. High-Precision Countdown
-        const bdayDate = new Date("March 23, 2026 00:00:00").getTime();
+        /** 1. Countdown Logic **/
+        const bday = new Date("March 23, 2026 00:00:00").getTime();
         function updateTimer() {
             const now = new Date().getTime();
-            const diff = bdayDate - now;
-            
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = d < 10 ? '0'+d : d;
-            document.getElementById("hours").innerText = h < 10 ? '0'+h : h;
-            document.getElementById("mins").innerText = m < 10 ? '0'+m : m;
-            document.getElementById("secs").innerText = s < 10 ? '0'+s : s;
+            const diff = bday - now;
+            document.getElementById("days").innerText = Math.floor(diff / 86400000);
+            document.getElementById("hours").innerText = Math.floor((diff % 86400000) / 3600000);
+            document.getElementById("mins").innerText = Math.floor((diff % 3600000) / 60000);
+            document.getElementById("secs").innerText = Math.floor((diff % 60000) / 1000);
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // 3. Reveal Content Function
-        function unveilMagic() {
+        /** 2. Celebration Trigger **/
+        function triggerCelebration() {
             const btn = document.querySelector('.gold-btn');
             const reveal = document.getElementById('reveal-section');
             
             btn.style.opacity = '0';
-            btn.style.transform = 'translateY(20px)';
             
+            // Start the Flower/Gift/Heart Rain
+            for(let i=0; i<100; i++) {
+                setTimeout(createCelebrationItem, i * 50);
+            }
+
             setTimeout(() => {
                 btn.parentElement.style.display = 'none';
                 reveal.classList.add('active-reveal');
-                // Adjust particles for celebration
-                pSpeed = 2.0;
+                particleSpeed = 2.5; // Speed up gold dust
             }, 600);
         }
 
-        // 4. Angel Dust Particle Engine
+        /** 3. Flower, Heart, Gift Engine **/
+        function createCelebrationItem() {
+            const items = ['🌸', '🌹', '❤️', '🎁', '✨', '💍', '💎'];
+            const item = document.createElement('div');
+            item.className = 'celebration-item';
+            item.innerText = items[Math.floor(Math.random() * items.length)];
+            
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            item.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            
+            document.getElementById('celebration-layer').appendChild(item);
+            
+            // Cleanup memory
+            setTimeout(() => item.remove(), 5000);
+        }
+
+        /** 4. Angel Dust Particle System **/
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
-        let pSpeed = 0.4;
+        let particleSpeed = 0.5;
         
         function resize() {
             canvas.width = window.innerWidth;
@@ -315,20 +315,18 @@
 
         let particles = [];
         class Particle {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5 + 0.5;
-                this.vX = (Math.random() - 0.5) * pSpeed;
-                this.vY = (Math.random() - 0.5) * pSpeed;
+                this.size = Math.random() * 1.5;
+                this.vX = (Math.random() - 0.5) * particleSpeed;
+                this.vY = (Math.random() - 0.5) * particleSpeed;
                 this.a = Math.random();
             }
             update() {
-                this.x += this.vX;
-                this.y += this.vY;
+                this.x += this.vX * particleSpeed;
+                this.y += this.vY * particleSpeed;
                 if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
             }
             draw() {
@@ -339,7 +337,7 @@
             }
         }
 
-        for (let i = 0; i < 120; i++) particles.push(new Particle());
+        for (let i = 0; i < 150; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
